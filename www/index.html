@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>Blank App</title>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+
+<body>
+    <script>function onDeviceReady(){
+    
+}
+      document.addEventListener("deviceready", onDeviceReady, false);
+
+    </script>
+    <div id="page1" data-role="page">
+
+        <div data-role="header" data-position="fixed">
+            <a href="" data-rel="back" class="ui-btn ui-icon-back ui-btn-icon-notext">Back</a>
+            <h1>Refresh</h1>
+            <a href="#" data-icon="home" class="ui-btn ui-icon-refresh ui-btn-icon-notext" onclick="gotoCategoriesPage(this);">Home</a>
+        </div>
+
+        <div data-role="main" class="ui-content">
+            <p id="op" >Content here</p>
+        </div>
+
+        <div data-role="footer" data-position="fixed">
+            <h1>Footer Text</h1>
+        </div>
+
+    </div>
+    <script>
+        var info="";
+        var nameList = [
+{name:'x', age:20, email:'x@email.com'},
+{name:'y', age:60, email:'y@email.com'},
+{name:'x', age:22, email:'joe@email.com'},
+            {name:'c', age:10, email:'c@email.com'},
+{name:'Abc', age:40, email:'abc@email.com'},
+            {name:'abc', age:40, email:'aabc@email.com'}
+];
+
+var filteredValue = nameList.filter(function (item) {
+      return item.age < 30;
+});
+        info=info+"<br/>filtered values<br/>";
+        $(filteredValue).each(function(k,i){
+            info=info+", "+i.email;
+        });
+        info=info+"<br/>name only<br/>";
+        var names=nameList.map(function(item){
+            return item.name;
+        });
+        $(names).each(function(k,i){
+            info=info+", "+i;
+        });
+var uniqueNames=Array.from(new Set(names));
+        info=info+"<br/>uniques<br/>";
+        $(uniqueNames).each(function(k,i){
+            info=info+","+i;
+        });
+        var sortedNames=uniqueNames.sort();
+        info=info+"<br/>sorted<br/>";
+        $(sortedNames).each(function(k,i){
+            info=info+", "+i;
+        });
+        
+        $("#op").html(info);
+        $("#op").append("<br/><span style='color:red'>Press refresh on top right and wait for data to load below</span>");
+        
+        function gotoCategoriesPage(v) {
+            $.getJSON("http://www.zantida.com/UKHiStreet/store/stores", {
+                lat: 0,
+                lng: 0,
+                lat1: 90,
+                lng1: 90
+            }, storeSuccess);
+        }
+
+        function storeSuccess(data, status, xhr) {
+            $("#op").append("Data from server<br/>");
+            $(data).each(function(k,i){
+                $("#op").append("<br/>"+i.store_name);
+            });
+        }
+  </script>
+    <script type="text/javascript" src="cordova.js"></script>
+</body>
+
+</html>
